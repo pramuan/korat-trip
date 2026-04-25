@@ -4,331 +4,332 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ทริปเขาใหญ่ - โคราช</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #6d8c54;
-            --secondary-color: #f4f1ea;
-            --accent-color: #d4a373;
-            --text-dark: #4a4a4a;
+            --primary-color: #5b7444;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #333;
+            --accent: #d4a373;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Sarabun', sans-serif;
-            background-color: var(--secondary-color);
-            color: var(--text-dark);
+            font-family: 'IBM Plex Sans Thai', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
             justify-content: center;
         }
 
-        .container {
-            max-width: 500px;
+        .app-container {
             width: 100%;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            padding: 25px;
+            max-width: 600px;
+            background: var(--card-bg);
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
         }
 
-        .header {
+        .hero-banner {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1588167060574-363b7194689b?auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
             text-align: center;
+        }
+
+        .hero-banner h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .itinerary-content {
+            padding: 20px;
+        }
+
+        .day-card {
             margin-bottom: 30px;
         }
 
-        .header h1 {
+        .day-header {
+            font-size: 1.2rem;
+            font-weight: 600;
             color: var(--primary-color);
-            margin: 0;
-            font-size: 28px;
-        }
-
-        .date-badge {
-            background: var(--primary-color);
-            color: white;
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 50px;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-
-        .day-section {
-            margin-bottom: 40px;
-        }
-
-        .day-title {
-            font-weight: bold;
-            font-size: 18px;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 5px;
+            border-left: 5px solid var(--primary-color);
+            padding-left: 15px;
             margin-bottom: 20px;
-            color: var(--primary-color);
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
         }
 
-        .timeline-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 12px;
-            transition: background 0.3s;
-        }
-
-        .timeline-item:hover {
-            background: #f9f9f9;
-        }
-
-        .time {
-            font-weight: bold;
-            min-width: 65px;
-            font-size: 14px;
-            color: var(--accent-color);
-        }
-
-        .location-info {
-            flex-grow: 1;
-        }
-
-        .location-link {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .location-link:hover {
-            color: var(--primary-color);
-        }
-
-        .location-link i {
-            font-size: 12px;
-        }
-
-        /* Checkbox Styling */
-        .checkbox-container {
-            display: block;
+        .timeline {
             position: relative;
-            padding-left: 30px;
-            cursor: pointer;
-            user-select: none;
+            padding-left: 20px;
         }
 
-        .checkbox-container input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-            height: 0;
-            width: 0;
+        /* รายการสถานที่ */
+        .item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            background: #fff;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border: 1px solid #eee;
+            transition: all 0.2s ease;
         }
 
-        .checkmark {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 22px;
-            width: 22px;
-            background-color: #eee;
-            border-radius: 6px;
+        .item.checked {
+            background-color: #f1f8ed;
+            border-color: #d1e7c4;
+            opacity: 0.8;
         }
 
-        .checkbox-container:hover input ~ .checkmark {
-            background-color: #ccc;
-        }
-
-        .checkbox-container input:checked ~ .checkmark {
-            background-color: var(--primary-color);
-        }
-
-        .checkmark:after {
-            content: "";
-            position: absolute;
-            display: none;
-        }
-
-        .checkbox-container input:checked ~ .checkmark:after {
-            display: block;
-        }
-
-        .checkbox-container .checkmark:after {
-            left: 8px;
-            top: 4px;
-            width: 5px;
-            height: 10px;
-            border: solid white;
-            border-width: 0 3px 3px 0;
-            transform: rotate(45deg);
-        }
-
-        .completed .location-link {
+        .item.checked .loc-name {
             text-decoration: line-through;
-            color: #999;
+            color: #888;
+        }
+
+        /* Checkbox Custom */
+        .cb-wrapper {
+            margin-top: 4px;
+        }
+
+        .cb-wrapper input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            accent-color: var(--primary-color);
+        }
+
+        .info-wrapper {
+            flex: 1;
+        }
+
+        .time-tag {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .loc-name {
+            font-size: 1.05rem;
+            font-weight: 400;
+            color: var(--text-main);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .loc-name i {
+            font-size: 0.8rem;
+            margin-left: 5px;
+            color: #bbb;
+        }
+
+        /* Responsive ภาพประกอบขนาดเล็ก */
+        .thumb {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 0.9rem;
+            color: #888;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
+<div class="app-container">
+    <div class="hero-banner">
         <h1>ทริปเขาใหญ่ - โคราช</h1>
-        <div class="date-badge">25 - 26 เมษายน 2569</div>
+        <p>25 - 26 เมษายน 2569</p>
     </div>
 
-    <div class="day-section">
-        <div class="day-title">
-            <i class="fas fa-calendar-day"></i> วันเสาร์ที่ 25 เมษายน 2569
-        </div>
-        
-        <div id="itinerary-day1">
-            <div class="timeline-item">
-                <label class="checkbox-container">
-                    <input type="checkbox" onchange="toggleComplete(this)">
-                    <span class="checkmark"></span>
-                </label>
-                <div class="time">08.00 น.</div>
-                <div class="location-info">ออกเดินทางจากนนทบุรี</div>
+    <div class="itinerary-content">
+        <div class="day-card">
+            <div class="day-header">
+                <span>วันเสาร์ที่ 25 เมษายน</span>
             </div>
-
-            <div class="timeline-item">
-                <label class="checkbox-container">
-                    <input type="checkbox" onchange="toggleComplete(this)">
-                    <span class="checkmark"></span>
-                </label>
-                <div class="time">11.00 น.</div>
-                <div class="location-info">
-                    <a href="https://www.google.com/maps/search/MAT+%26+co+Matcha+Khaoyai" target="_blank" class="location-link">
-                        MAT & co / Sai Sook <i class="fas fa-external-link-alt"></i>
-                    </a>
+            
+            <div id="day1-list">
+                <div class="item" data-id="d1-1">
+                    <div class="cb-wrapper"><input type="checkbox"></div>
+                    <div class="info-wrapper">
+                        <span class="time-tag">08.00 น.</span>
+                        <div class="loc-name">ออกเดินทางจากนนทบุรี</div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="timeline-item">
-                <label class="checkbox-container">
-                    <input type="checkbox" onchange="toggleComplete(this)">
-                    <span class="checkmark"></span>
-                </label>
-                <div class="time">13.00 น.</div>
-                <div class="location-info">
-                    <a href="https://www.google.com/maps/search/วัดโนนกุ่ม" target="_blank" class="location-link">
-                        วัดโนนกุ่ม <i class="fas fa-external-link-alt"></i>
-                    </a>
+                <div class="item" data-id="d1-2">
+                    <div class="cb-wrapper"><input type="checkbox"></div>
+                    <div class="info-wrapper">
+                        <span class="time-tag">11.00 น.</span>
+                        <a href="https://www.google.com/maps/search/MAT+%26+co+Matcha+Khaoyai" target="_blank" class="loc-name">
+                            MAT & co / Sai Sook <i class="fas fa-map-marker-alt"></i>
+                        </a>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1544787210-2827443cb69b?auto=format&fit=crop&w=100&q=80" class="thumb" alt="cafe">
                 </div>
-            </div>
 
-            <div class="timeline-item">
-                <label class="checkbox-container">
-                    <input type="checkbox" onchange="toggleComplete(this)">
-                    <span class="checkmark"></span>
-                </label>
-                <div class="time">14.00 น.</div>
-                <div class="location-info">
-                    <a href="https://www.google.com/maps/search/หนับโภชนา" target="_blank" class="location-link">
-                        หนับโภชนา <i class="fas fa-external-link-alt"></i>
-                    </a>
+                <div class="item" data-id="d1-3">
+                    <div class="cb-wrapper"><input type="checkbox"></div>
+                    <div class="info-wrapper">
+                        <span class="time-tag">13.00 น.</span>
+                        <a href="https://www.google.com/maps/search/วัดโนนกุ่ม" target="_blank" class="loc-name">
+                            วัดโนนกุ่ม <i class="fas fa-map-marker-alt"></i>
+                        </a>
+                    </div>
                 </div>
-            </div>
 
-            <div class="timeline-item">
-                <label class="checkbox-container">
-                    <input type="checkbox" onchange="toggleComplete(this)">
-                    <span class="checkmark"></span>
-                </label>
-                <div class="time">15.00 น.</div>
-                <div class="location-info">
-                    <a href="https://www.google.com/maps/search/สพจ.โคราช" target="_blank" class="location-link">
-                        สพจ.โคราช <i class="fas fa-external-link-alt"></i>
-                    </a>
+                <div class="item" data-id="d1-4">
+                    <div class="cb-wrapper"><input type="checkbox"></div>
+                    <div class="info-wrapper">
+                        <span class="time-tag">14.00 น.</span>
+                        <a href="https://www.google.com/maps/search/หนับโภชนา+โคราช" target="_blank" class="loc-name">
+                            หนับโภชนา <i class="fas fa-map-marker-alt"></i>
+                        </a>
+                    </div>
                 </div>
-            </div>
 
-            <div class="timeline-item">
-                <label class="checkbox-container">
-                    <input type="checkbox" onchange="toggleComplete(this)">
-                    <span class="checkmark"></span>
-                </label>
-                <div class="time">16.00 น.</div>
-                <div class="location-info">
-                    <a href="https://www.google.com/maps/search/บ้านส้ม+โคราช" target="_blank" class="location-link">
-                        บ้านส้ม <i class="fas fa-external-link-alt"></i>
-                    </a>
+                <div class="item" data-id="d1-5">
+                    <div class="cb-wrapper"><input type="checkbox"></div>
+                    <div class="info-wrapper">
+                        <span class="time-tag">16.00 น.</span>
+                        <a href="https://www.google.com/maps/search/บ้านส้ม+โคราช" target="_blank" class="loc-name">
+                            บ้านส้ม <i class="fas fa-map-marker-alt"></i>
+                        </a>
+                    </div>
                 </div>
-            </div>
 
-            <div class="timeline-item">
-                <label class="checkbox-container">
-                    <input type="checkbox" onchange="toggleComplete(this)">
-                    <span class="checkmark"></span>
-                </label>
-                <div class="time">19.00 น.</div>
-                <div class="location-info">อาหารเย็น / เข้าที่พัก</div>
+                <div class="item" data-id="d1-6">
+                    <div class="cb-wrapper"><input type="checkbox"></div>
+                    <div class="info-wrapper">
+                        <span class="time-tag">19.00 น.</span>
+                        <div class="loc-name">อาหารเย็น / เข้าที่พัก</div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="day-section">
-        <div class="day-title">
-            <i class="fas fa-calendar-day"></i> วันอาทิตย์ที่ 26 เมษายน 2569
-        </div>
-
-        <div id="itinerary-day2">
-            <div class="timeline-item">
-                <label class="checkbox-container">
-                    <input type="checkbox" onchange="toggleComplete(this)">
-                    <span class="checkmark"></span>
-                </label>
-                <div class="time">08.00 น.</div>
-                <div class="location-info">Check-Out / อาหารเช้า</div>
+        <div class="day-card">
+            <div class="day-header">
+                <span>วันอาทิตย์ที่ 26 เมษายน</span>
             </div>
-
-            <div class="timeline-item">
-                <label class="checkbox-container">
-                    <input type="checkbox" onchange="toggleComplete(this)">
-                    <span class="checkmark"></span>
-                </label>
-                <div class="time">10.30 น.</div>
-                <div class="location-info">
-                    <a href="https://www.google.com/maps/search/ไร่สุวรรณ" target="_blank" class="location-link">
-                        ไร่สุวรรณ <i class="fas fa-external-link-alt"></i>
-                    </a>
+            
+            <div id="day2-list">
+                <div class="item" data-id="d2-1">
+                    <div class="cb-wrapper"><input type="checkbox"></div>
+                    <div class="info-wrapper">
+                        <span class="time-tag">08.00 น.</span>
+                        <div class="loc-name">Check-Out / อาหารเช้า</div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="timeline-item">
-                <label class="checkbox-container">
-                    <input type="checkbox" onchange="toggleComplete(this)">
-                    <span class="checkmark"></span>
-                </label>
-                <div class="time">12.00 น.</div>
-                <div class="location-info">อาหารกลางวัน</div>
-            </div>
+                <div class="item" data-id="d2-2">
+                    <div class="cb-wrapper"><input type="checkbox"></div>
+                    <div class="info-wrapper">
+                        <span class="time-tag">10.30 น.</span>
+                        <a href="https://www.google.com/maps/search/ไร่สุวรรณ" target="_blank" class="loc-name">
+                            ไร่สุวรรณ <i class="fas fa-map-marker-alt"></i>
+                        </a>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1595124245030-41448b196d00?auto=format&fit=crop&w=100&q=80" class="thumb" alt="corn">
+                </div>
 
-            <div class="timeline-item">
-                <label class="checkbox-container">
-                    <input type="checkbox" onchange="toggleComplete(this)">
-                    <span class="checkmark"></span>
-                </label>
-                <div class="time">13.30 น.</div>
-                <div class="location-info">เดินทางกลับกรุงเทพฯ</div>
+                <div class="item" data-id="d2-3">
+                    <div class="cb-wrapper"><input type="checkbox"></div>
+                    <div class="info-wrapper">
+                        <span class="time-tag">13.30 น.</span>
+                        <div class="loc-name">เดินทางกลับกรุงเทพฯ</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <footer>
+        <p>สร้างความทรงจำดีๆ ไปด้วยกันนะ ❤️</p>
+        <button onclick="clearProgress()" style="background: none; border: 1px solid #ccc; color: #888; padding: 5px 10px; border-radius: 5px; cursor: pointer;">ล้างข้อมูลที่ติ๊กไว้</button>
+    </footer>
 </div>
 
 <script>
-    function toggleComplete(checkbox) {
-        const item = checkbox.closest('.timeline-item');
-        if (checkbox.checked) {
-            item.classList.add('completed');
-        } else {
-            item.classList.remove('completed');
+    // ฟังก์ชันจัดการ LocalStorage
+    const storageKey = 'trip_khaoyai_progress';
+
+    function saveProgress() {
+        const checkedItems = [];
+        document.querySelectorAll('.item input[type="checkbox"]').forEach(cb => {
+            if (cb.checked) {
+                checkedItems.push(cb.closest('.item').getAttribute('data-id'));
+            }
+        });
+        localStorage.setItem(storageKey, JSON.stringify(checkedItems));
+    }
+
+    function loadProgress() {
+        const savedData = localStorage.getItem(storageKey);
+        if (savedData) {
+            const checkedItems = JSON.parse(savedData);
+            checkedItems.forEach(id => {
+                const item = document.querySelector(`.item[data-id="${id}"]`);
+                if (item) {
+                    const cb = item.querySelector('input[type="checkbox"]');
+                    cb.checked = true;
+                    item.classList.add('checked');
+                }
+            });
         }
     }
+
+    function clearProgress() {
+        if(confirm('ต้องการล้างข้อมูลการเดินทางทั้งหมดใช่หรือไม่?')) {
+            localStorage.removeItem(storageKey);
+            location.reload();
+        }
+    }
+
+    // Event Listeners
+    document.querySelectorAll('.item input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', function() {
+            const item = this.closest('.item');
+            if (this.checked) {
+                item.classList.add('checked');
+            } else {
+                item.classList.remove('checked');
+            }
+            saveProgress();
+        });
+    });
+
+    // เริ่มโหลดข้อมูลเมื่อเปิดหน้าเว็บ
+    window.onload = loadProgress;
 </script>
 
 </body>
