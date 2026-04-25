@@ -4,201 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ทริปเขาใหญ่ - โคราช</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #5b7444;
-            --bg-color: #f4f3ef;
-            --card-bg: #ffffff;
-            --text-main: #333;
-            --accent: #d4a373;
-        }
-
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        body {
-            font-family: 'IBM Plex Sans Thai', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0; padding: 0;
-            display: flex; justify-content: center;
-        }
-
-        .app-container {
-            width: 100%; max-width: 600px;
-            background: var(--card-bg);
-            min-height: 100vh;
-            box-shadow: 0 0 20px rgba(0,0,0,0.05);
-        }
-
-        .hero-banner {
-            width: 100%; height: 220px;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('[attachment_1](attachment)');
+        :root { --p: #5b7444; --bg: #f8f9fa; --txt: #333; }
+        body { font-family: 'IBM Plex Sans Thai', sans-serif; background: var(--bg); margin: 0; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 500px; background: white; min-height: 100vh; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+        
+        /* Banner Section */
+        .banner { 
+            width: 100%; height: 200px; 
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1510672854261-2679634e749a?auto=format&fit=crop&w=800&q=80');
             background-size: cover; background-position: center;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            color: white; text-align: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; color: white;
         }
 
-        .hero-banner h1 { margin: 0; font-size: 2rem; font-weight: 600; }
-
-        .itinerary-content { padding: 20px; }
-
-        .day-header {
-            font-size: 1.2rem; font-weight: 600; color: var(--primary-color);
-            border-left: 5px solid var(--primary-color);
-            padding-left: 15px; margin: 25px 0 15px 0;
+        .itinerary { padding: 20px; }
+        .day-label { font-weight: 600; color: var(--p); font-size: 1.1rem; margin: 20px 0 10px; border-left: 4px solid var(--p); padding-left: 10px; }
+        
+        .card { 
+            display: flex; align-items: center; gap: 12px; padding: 12px; 
+            border: 1px solid #eee; border-radius: 12px; margin-bottom: 10px; transition: 0.2s;
         }
+        .card.checked { background: #f0f7eb; opacity: 0.6; }
+        .card.checked .name { text-decoration: line-through; color: #999; }
 
-        .item {
-            display: flex; align-items: center; gap: 12px;
-            padding: 12px; background: #fff; border-radius: 12px;
-            margin-bottom: 12px; border: 1px solid #eee;
-            transition: all 0.2s ease;
-        }
-
-        .item.checked { background-color: #f1f8ed; border-color: #d1e7c4; opacity: 0.7; }
-        .item.checked .loc-name { text-decoration: line-through; color: #888; }
-
-        .cb-wrapper input[type="checkbox"] {
-            width: 20px; height: 20px; cursor: pointer; accent-color: var(--primary-color);
-        }
-
-        .info-wrapper { flex: 1; }
-        .time-tag { font-size: 0.8rem; font-weight: 600; color: var(--accent); display: block; }
-        .loc-name { font-size: 1rem; color: var(--text-main); text-decoration: none; font-weight: 400; }
-
-        .thumb {
-            width: 70px; height: 70px; border-radius: 8px; object-fit: cover;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        footer { text-align: center; padding: 40px 20px; color: #888; font-size: 0.9rem; }
+        .check-box { width: 22px; height: 22px; cursor: pointer; accent-color: var(--p); }
+        .info { flex: 1; }
+        .time { font-size: 0.8rem; color: #d4a373; font-weight: 600; }
+        .name { font-size: 1rem; color: var(--txt); text-decoration: none; display: block; }
+        
+        /* รูปภาพประกอบ */
+        .pic { width: 70px; height: 70px; border-radius: 8px; object-fit: cover; background: #eee; }
+        
+        footer { text-align: center; padding: 30px; color: #999; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
-<div class="app-container">
-    <div class="hero-banner">
-        <h1>ทริปเขาใหญ่ - โคราช</h1>
+<div class="container">
+    <div class="banner">
+        <h1 style="margin:0">Khao Yai Trip</h1>
         <p>25 - 26 เมษายน 2569</p>
     </div>
 
-    <div class="itinerary-content">
-        <div class="day-header">วันเสาร์ที่ 25 เมษายน</div>
-        
-        <div class="item" data-id="d1-1">
-            <div class="cb-wrapper"><input type="checkbox"></div>
-            <div class="info-wrapper">
-                <span class="time-tag">08.00 น.</span>
-                <div class="loc-name">ออกเดินทางจากนนทบุรี</div>
+    <div class="itinerary">
+        <div class="day-label">วันเสาร์ที่ 25 เมษายน</div>
+
+        <div class="card" data-id="1">
+            <input type="checkbox" class="check-box">
+            <div class="info">
+                <span class="time">11.00 น.</span>
+                <a href="https://www.google.com/maps/search/MAT+%26+co+Khaoyai" target="_blank" class="name">MAT & co / Sai Sook</a>
             </div>
+            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=200" class="pic">
         </div>
 
-        <div class="item" data-id="d1-2">
-            <div class="cb-wrapper"><input type="checkbox"></div>
-            <div class="info-wrapper">
-                <span class="time-tag">11.00 น.</span>
-                <a href="https://www.google.com/maps/search/MAT+%26+co+Matcha+Khaoyai" target="_blank" class="loc-name">
-                    MAT & co / Sai Sook <i class="fas fa-map-marker-alt"></i>
-                </a>
+        <div class="card" data-id="2">
+            <input type="checkbox" class="check-box">
+            <div class="info">
+                <span class="time">13.00 น.</span>
+                <a href="https://www.google.com/maps/search/วัดโนนกุ่ม" target="_blank" class="name">วัดโนนกุ่ม</a>
             </div>
-            <img src="[attachment_2](attachment)" class="thumb">
+            <img src="https://images.unsplash.com/photo-1528127269322-539801943592?w=200" class="pic">
         </div>
 
-        <div class="item" data-id="d1-3">
-            <div class="cb-wrapper"><input type="checkbox"></div>
-            <div class="info-wrapper">
-                <span class="time-tag">13.00 น.</span>
-                <a href="https://www.google.com/maps/search/วัดโนนกุ่ม+สีคิ้ว" target="_blank" class="loc-name">
-                    วัดโนนกุ่ม <i class="fas fa-map-marker-alt"></i>
-                </a>
-            </div>
-            <img src="[attachment_0](attachment)" class="thumb">
-        </div>
+        <div class="day-label">วันอาทิตย์ที่ 26 เมษายน</div>
 
-        <div class="item" data-id="d1-4">
-            <div class="cb-wrapper"><input type="checkbox"></div>
-            <div class="info-wrapper">
-                <span class="time-tag">14.00 น.</span>
-                <a href="https://www.google.com/maps/search/หนับโภชนา+โคราช" target="_blank" class="loc-name">
-                    หนับโภชนา <i class="fas fa-map-marker-alt"></i>
-                </a>
+        <div class="card" data-id="3">
+            <input type="checkbox" class="check-box">
+            <div class="info">
+                <span class="time">10.30 น.</span>
+                <a href="https://www.google.com/maps/search/ไร่สุวรรณ" target="_blank" class="name">ไร่สุวรรณ</a>
             </div>
-            <img src="[attachment_4](attachment)" class="thumb">
-        </div>
-
-        <div class="item" data-id="d1-5">
-            <div class="cb-wrapper"><input type="checkbox"></div>
-            <div class="info-wrapper">
-                <span class="time-tag">16.00 น.</span>
-                <a href="https://www.google.com/maps/search/ร้านบ้านส้ม+โคราช" target="_blank" class="loc-name">
-                    บ้านส้ม <i class="fas fa-map-marker-alt"></i>
-                </a>
-            </div>
-            <img src="[attachment_5](attachment)" class="thumb">
-        </div>
-
-        <div class="day-header">วันอาทิตย์ที่ 26 เมษายน</div>
-
-        <div class="item" data-id="d2-1">
-            <div class="cb-wrapper"><input type="checkbox"></div>
-            <div class="info-wrapper">
-                <span class="time-tag">08.00 น.</span>
-                <div class="loc-name">Check-Out / อาหารเช้า</div>
-            </div>
-        </div>
-
-        <div class="item" data-id="d2-2">
-            <div class="cb-wrapper"><input type="checkbox"></div>
-            <div class="info-wrapper">
-                <span class="time-tag">10.30 น.</span>
-                <a href="https://www.google.com/maps/search/ไร่สุวรรณ+ปากช่อง" target="_blank" class="loc-name">
-                    ไร่สุวรรณ <i class="fas fa-map-marker-alt"></i>
-                </a>
-            </div>
-            <img src="[attachment_3](attachment)" class="thumb">
-        </div>
-
-        <div class="item" data-id="d2-3">
-            <div class="cb-wrapper"><input type="checkbox"></div>
-            <div class="info-wrapper">
-                <span class="time-tag">13.30 น.</span>
-                <div class="loc-name">เดินทางกลับกรุงเทพฯ</div>
-            </div>
+            <img src="https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=200" class="pic">
         </div>
     </div>
 
     <footer>
-        <p>ขอให้เป็นทริปที่มีความสุขนะครับ! 🚗💨</p>
-        <button onclick="clearProgress()" style="background:none; border:1px solid #ddd; padding:5px 10px; border-radius:5px; color:#999; cursor:pointer;">ล้างข้อมูลที่ติ๊กไว้</button>
+        <p>บันทึกการเดินทางของคุณใน LocalStorage</p>
+        <button onclick="localStorage.clear(); location.reload();" style="border:1px solid #ddd; background:none; color:#999; border-radius:15px; padding:5px 10px; cursor:pointer;">ล้างข้อมูลทั้งหมด</button>
     </footer>
 </div>
 
 <script>
-    const storageKey = 'trip_2026_progress';
-    function saveProgress() {
-        const checked = Array.from(document.querySelectorAll('.item input:checked')).map(cb => cb.closest('.item').dataset.id);
-        localStorage.setItem(storageKey, JSON.stringify(checked));
+    // ระบบบันทึกสถานะ
+    const boxes = document.querySelectorAll('.check-box');
+    const KEY = 'TRIP_PROG_2026';
+
+    function save() {
+        const checked = Array.from(boxes).filter(i => i.checked).map(i => i.closest('.card').dataset.id);
+        localStorage.setItem(KEY, JSON.stringify(checked));
     }
-    function loadProgress() {
-        const saved = JSON.parse(localStorage.getItem(storageKey) || '[]');
-        saved.forEach(id => {
-            const el = document.querySelector(`.item[data-id="${id}"]`);
-            if (el) { el.querySelector('input').checked = true; el.classList.add('checked'); }
-        });
-    }
-    function clearProgress() { if(confirm('ล้างรายการที่ติ๊กทั้งหมด?')) { localStorage.removeItem(storageKey); location.reload(); } }
-    
-    document.querySelectorAll('.item input').forEach(cb => {
+
+    boxes.forEach(cb => {
         cb.addEventListener('change', (e) => {
-            e.target.closest('.item').classList.toggle('checked', e.target.checked);
-            saveProgress();
+            e.target.closest('.card').classList.toggle('checked', e.target.checked);
+            save();
         });
     });
-    window.onload = loadProgress;
+
+    window.onload = () => {
+        const saved = JSON.parse(localStorage.getItem(KEY) || '[]');
+        saved.forEach(id => {
+            const card = document.querySelector(`[data-id="${id}"]`);
+            if (card) {
+                card.querySelector('input').checked = true;
+                card.classList.add('checked');
+            }
+        });
+    }
 </script>
 </body>
 </html>
